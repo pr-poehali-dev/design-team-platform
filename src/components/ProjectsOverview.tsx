@@ -2,6 +2,7 @@
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 import { EyeIcon, MessageSquareIcon } from "lucide-react";
 
 type Project = {
@@ -61,6 +62,8 @@ type ProjectsOverviewProps = {
 };
 
 export const ProjectsOverview = ({ showAll = false }: ProjectsOverviewProps) => {
+  const navigate = useNavigate();
+  
   const displayProjects = showAll 
     ? projects 
     : projects.filter(p => p.status === "active");
@@ -111,11 +114,19 @@ export const ProjectsOverview = ({ showAll = false }: ProjectsOverviewProps) => 
                 </div>
                 
                 <div className="flex items-center gap-2 self-end md:self-center">
-                  <Button variant="outline" size="sm">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => navigate(`/project/${project.id}`)}
+                  >
                     <EyeIcon className="h-4 w-4 mr-1" />
                     Просмотр
                   </Button>
-                  <Button variant="outline" size="sm">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => navigate(`/project/${project.id}?tab=comments`)}
+                  >
                     <MessageSquareIcon className="h-4 w-4 mr-1" />
                     Комментарии
                   </Button>
